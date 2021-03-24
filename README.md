@@ -1,2 +1,3 @@
-# dontwithit
-React Native learning project
+# acouwood
+Thesis project - Matilde Gerholt and Julie Schelhart
+
