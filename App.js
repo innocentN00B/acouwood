@@ -1,10 +1,21 @@
 import React from "react";
-import { StyleSheet, View, Image, Text } from "react-native";
-import ViewImageScreen from "./app/screens/ViewImageScreen";
-import WelcomeScreen from "./app/screens/WelcomeScreen";
+import AppLoading from "expo-app-loading";
+import LoginScreen from "./app/screens/LoginScreen";
+import {
+  useFonts,
+  Montserrat_400Regular,
+  Montserrat_700Bold,
+} from "@expo-google-fonts/montserrat";
 
 export default function App() {
-  return (
-    <ViewImageScreen/>
-  );
+  let [fontsLoaded] = useFonts({
+    Montserrat_400Regular,
+    Montserrat_700Bold,
+  });
+
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  }
+
+  return <LoginScreen></LoginScreen>;
 }
