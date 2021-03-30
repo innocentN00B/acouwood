@@ -1,12 +1,9 @@
 import React from "react";
-import { StyleSheet, View, Text, TouchableNativeFeedback } from "react-native";
-import { Formik } from "formik";
+import { StyleSheet, View } from "react-native";
 import * as Yup from "yup";
 
-import AppTextInput from "../components/AppTextInput";
-import CategoryButton from "../components/CategoryButton";
+import { AppForm, AppFormField, SubmitButton } from "../components/forms";
 import colors from "../config/colors";
-import ErrorMessage from "../components/ErrorMessage";
 import Heading from "../components/Heading";
 import LogoSvg from "../../svgs/LogoSvg";
 
@@ -22,42 +19,33 @@ function LoginScreen() {
         <LogoSvg></LogoSvg>
       </View>
       <Heading>Login</Heading>
-      <Formik
-        initialValues={{ email: "", password: "" }}
-        onSubmit={(values) => console.log(values)}
-        validationSchema={validationSchema}
-      >
-        {({ handleChange, handleSubmit, errors, setFieldTouched, touched }) => (
-          <>
-            <AppTextInput
-              autoCapitalize="none"
-              autoCorrect="false"
-              icon="email"
-              keyboardType="email-address"
-              onBlur={() => setFieldTouched("email")}
-              onChangeText={handleChange("email")}
-              placeholder="Email"
-              textContentType="emailAddress"
-            ></AppTextInput>
-            <ErrorMessage error={errors.email} visible={touched.email} />
-            <AppTextInput
-              autoCapitalize="none"
-              autoCorrect="false"
-              icon="lock"
-              onBlur={() => setFieldTouched("password")}
-              onChangeText={handleChange("password")}
-              placeholder="Password"
-              secureTextEntry
-              textContentType="password"
-            ></AppTextInput>
-            <ErrorMessage error={errors.password} visible={touched.password} />
-            <CategoryButton
-              title="Login"
-              onPress={handleSubmit}
-            ></CategoryButton>
-          </>
-        )}
-      </Formik>
+      <View style={styles.formContainer}>
+        <AppForm
+          initialValues={{ email: "", password: "" }}
+          onSubmit={(values) => console.log(values)}
+          validationSchema={validationSchema}
+        >
+          <AppFormField
+            autoCapitalize="none"
+            autoCorrect={false}
+            icon="email"
+            keyboardType="email-address"
+            name="email"
+            placeholder="Email"
+            textContentType="emailAddress"
+          ></AppFormField>
+          <AppFormField
+            autoCapitalize="none"
+            autoCorrect={false}
+            icon="lock"
+            name="password"
+            placeholder="Password"
+            secureTextEntry
+            textContentType="password"
+          ></AppFormField>
+          <SubmitButton title="Login" />
+        </AppForm>
+      </View>
     </View>
   );
 }
@@ -69,6 +57,9 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     paddingVertical: 50,
     paddingHorizontal: 20,
+  },
+  formContainer: {
+    alignItems: "center",
   },
   logoContainer: {
     alignSelf: "center",

@@ -1,13 +1,17 @@
 import React from "react";
+import { useFormikContext } from "formik";
 import { TouchableOpacity, StyleSheet, Text } from "react-native";
-import colors from "../config/colors";
+import colors from "../../config/colors";
 
-function ClickHereButton({ title, color = "secondary" }) {
+function SubmitButton({ title, color = "secondary" }) {
+  const { handleSubmit } = useFormikContext();
+
   return (
     <TouchableOpacity
+      onPress={handleSubmit}
       style={[styles.button, { backgroundColor: colors[color] }]}
     >
-      <Text style={styles.text}>{title}</Text>
+      <Text style={styles.text}>{title} </Text>
     </TouchableOpacity>
   );
 }
@@ -18,8 +22,8 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: "center",
     alignItems: "center",
-    width: "90%",
-    height: "8%",
+    width: "50%",
+    height: "20%",
     marginVertical: 10,
     shadowColor: "#000",
     shadowOffset: {
@@ -38,4 +42,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ClickHereButton;
+export default SubmitButton;
