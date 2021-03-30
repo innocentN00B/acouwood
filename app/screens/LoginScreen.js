@@ -1,17 +1,17 @@
 import React from "react";
 import { Image, StyleSheet, View, Text } from "react-native";
+import SvgUri from "expo-svg-uri";
 
 import colors from "../config/colors";
 import Heading from "../components/Heading";
 import CategoryButton from "../components/CategoryButton";
 import ClickHereButton from "../components/ClickHereButton";
+import LogoSvg from "../../svgs/LogoSvg";
 
 function LoginScreen() {
   return (
     <View style={styles.background}>
-      <View style={styles.logoContainer}>
-        <Image source={require("../assets/woodsense_logo.jpg")} />
-      </View>
+      <LogoSvg></LogoSvg>
       <Heading>Login</Heading>
       <CategoryButton
         title="Login"
@@ -35,11 +35,6 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     alignItems: "center",
     padding: 50,
-  },
-  logoContainer: {
-    position: "absolute",
-    top: 200,
-    alignSelf: "center",
   },
 });
 
