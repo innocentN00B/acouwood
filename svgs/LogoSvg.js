@@ -14,7 +14,7 @@ export default function LogoSvg() {
   </svg>
   `;
 
-  const LogoSvg = () => <SvgXml xml={smile} width="200" height="200" />;
+  const LogoSvg = () => <SvgXml xml={smile} width="210" height="210" />;
 
   return <LogoSvg />;
 }

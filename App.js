@@ -6,6 +6,7 @@ import {
   Montserrat_400Regular,
   Montserrat_700Bold,
 } from "@expo-google-fonts/montserrat";
+import AppTextInput from "./app/components/AppTextInput";
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -17,5 +18,5 @@ export default function App() {
     return <AppLoading />;
   }
 
-  return <LoginScreen></LoginScreen>;
+  return <LoginScreen />;
 }
