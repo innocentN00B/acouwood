@@ -11,8 +11,9 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontFamily: "Montserrat_700Bold",
     paddingVertical: 20,
-    justifyContent: "center",
+    textAlign: "center",
     color: colors.dark,
+    width: "85%",
   },
 });
 

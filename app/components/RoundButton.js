@@ -1,16 +1,15 @@
 import React from "react";
-import { StyleSheet, Text, TouchableHighlight } from "react-native";
+import { StyleSheet, Text, TouchableOpacity } from "react-native";
 import colors from "../config/colors";
 
-function CategoryButton({ title, onPress, color = "secondary" }) {
+function RoundButton({ title, onPress, color }) {
   return (
-    <TouchableHighlight
+    <TouchableOpacity
       style={[styles.button, { backgroundColor: colors[color] }]}
       onPress={onPress}
-      underlayColor={colors.light}
     >
       <Text style={styles.text}>{title}</Text>
-    </TouchableHighlight>
+    </TouchableOpacity>
   );
 }
 
@@ -40,4 +39,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CategoryButton;
+export default RoundButton;

@@ -3,20 +3,20 @@ import { StyleSheet, View } from "react-native";
 import * as Yup from "yup";
 
 import { AppForm, AppFormField, SubmitButton } from "../components/forms";
-import colors from "../config/colors";
 import Heading from "../components/Heading";
 import LogoSvg from "../../svgs/LogoSvg";
+import Screen from "../components/Screen";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
   password: Yup.string().required().label("Password"),
 });
 
-function LoginScreen() {
+function LoginScreen({ navigation }) {
   return (
-    <View style={styles.background}>
+    <Screen>
       <View style={styles.logoContainer}>
-        <LogoSvg></LogoSvg>
+        <LogoSvg />
       </View>
       <Heading>Login</Heading>
       <View style={styles.formContainer}>
@@ -46,18 +46,11 @@ function LoginScreen() {
           <SubmitButton title="Login" />
         </AppForm>
       </View>
-    </View>
+    </Screen>
   );
 }
 
 const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    backgroundColor: colors.primary,
-    justifyContent: "flex-start",
-    paddingVertical: 50,
-    paddingHorizontal: 20,
-  },
   formContainer: {
     alignItems: "center",
   },
