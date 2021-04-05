@@ -5,15 +5,19 @@ import Screen from "../components/Screen";
 import Heading from "../components/Heading";
 import colors from "../config/colors";
 import NoTextLogoSvg from "../../svgs/NoTextLogoSvg";
+import { NavigationContainer } from "@react-navigation/native";
 
-function HomeScreen(props) {
+function HomeScreen({ route, navigation }) {
   return (
     <Screen>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.startButton}>
+        <TouchableOpacity
+          style={styles.startButton}
+          onPress={() => navigation.navigate("Category")}
+        >
           <NoTextLogoSvg />
         </TouchableOpacity>
-        <Heading>Start test</Heading>
+        <Heading>Start test {route.params.id}</Heading>
       </View>
     </Screen>
   );

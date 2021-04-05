@@ -5,6 +5,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as Yup from "yup";
 
 import { AppForm, AppFormField, SubmitButton } from "../components/forms";
+import AppText from "../components/AppText";
 import RoundButton from "../components/RoundButton";
 import Heading from "../components/Heading";
 import Screen from "../components/Screen";
@@ -18,7 +19,7 @@ const validationSchema = Yup.object().shape({
   comment: Yup.string().required().label("Comment"),
 });
 
-function ResultScreen({ navigation }) {
+function ResultScreen({ navigation, route }) {
   const [imageUri, setImageUri] = useState();
   const location = useLocation();
 
@@ -45,9 +46,10 @@ function ResultScreen({ navigation }) {
     <Screen>
       <View style={styles.container}>
         <Heading>Resultat</Heading>
+        <AppText>{route.params.title}</AppText>
         <AppForm
           initialValues={{ location: "", name: "", customer: "", comment: "" }}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={(values) => console.log(location)}
           validationSchema={validationSchema}
         >
           <AppFormField
@@ -55,7 +57,7 @@ function ResultScreen({ navigation }) {
             autoCorrect={true}
             icon="pin"
             name="location"
-            placeholder="LocationPlaceholder"
+            placeholder={JSON.stringify(location)}
             textContentType="location"
           />
           <AppFormField

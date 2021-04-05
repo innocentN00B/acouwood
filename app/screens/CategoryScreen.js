@@ -5,14 +5,16 @@ import CategoryButton from "../components/CategoryButton";
 import Heading from "../components/Heading";
 import Screen from "../components/Screen";
 
-function CategoryScreen(props) {
+function CategoryScreen({ navigation }) {
   return (
     <Screen>
       <View style={styles.container}>
         <Heading>Hvilket type træ skal du måle på?</Heading>
         <CategoryButton
           title="Almindeligt træ"
-          onPress={() => console.log()}
+          onPress={() =>
+            navigation.navigate("Result", { title: "Almindeligt træ" })
+          }
         ></CategoryButton>
         <CategoryButton
           title="CLT træ"

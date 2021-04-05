@@ -22,7 +22,7 @@ function LoginScreen({ navigation }) {
       <View style={styles.formContainer}>
         <AppForm
           initialValues={{ email: "", password: "" }}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={(values) => navigation.navigate("Home", { id: 1 })}
           validationSchema={validationSchema}
         >
           <AppFormField

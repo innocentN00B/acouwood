@@ -8,18 +8,19 @@ import {
 //Stack Navigator
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 
 //Local imports
 import LoginScreen from "./app/screens/LoginScreen";
 import HomeScreen from "./app/screens/HomeScreen";
 import CategoryScreen from "./app/screens/CategoryScreen";
 import ResultScreen from "./app/screens/ResultScreen";
+import CategoryButton from "./app/components/CategoryButton";
 
-//Stack Navigator
 const Stack = createStackNavigator();
 const StackNavigator = () => (
   <Stack.Navigator
-    initialRouteName="Result"
+    initialRouteName="Login"
     screenOptions={{ headerShown: false }}
   >
     <Stack.Screen name="Login" component={LoginScreen}></Stack.Screen>
