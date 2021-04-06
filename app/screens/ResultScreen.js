@@ -3,6 +3,7 @@ import { StyleSheet, View, Image } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as Yup from "yup";
+import Location from "expo-location";
 
 import { AppForm, AppFormField, SubmitButton } from "../components/forms";
 import AppText from "../components/AppText";
