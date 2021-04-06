@@ -8,25 +8,30 @@ import {
 //Stack Navigator
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
-import { createDrawerNavigator } from "@react-navigation/drawer";
 
 //Local imports
 import LoginScreen from "./app/screens/LoginScreen";
 import HomeScreen from "./app/screens/HomeScreen";
 import CategoryScreen from "./app/screens/CategoryScreen";
 import ResultScreen from "./app/screens/ResultScreen";
-import CategoryButton from "./app/components/CategoryButton";
+import HistoryScreen from "./app/screens/HistoryScreen";
+import TestDetailsScreen from "./app/screens/TestDetailsScreen";
 
 const Stack = createStackNavigator();
 const StackNavigator = () => (
   <Stack.Navigator
-    initialRouteName="Login"
+    initialRouteName="TestDetail"
     screenOptions={{ headerShown: false }}
   >
     <Stack.Screen name="Login" component={LoginScreen}></Stack.Screen>
     <Stack.Screen name="Home" component={HomeScreen}></Stack.Screen>
     <Stack.Screen name="Category" component={CategoryScreen}></Stack.Screen>
     <Stack.Screen name="Result" component={ResultScreen}></Stack.Screen>
+    <Stack.Screen name="History" component={HistoryScreen}></Stack.Screen>
+    <Stack.Screen
+      name="TestDetail"
+      component={TestDetailsScreen}
+    ></Stack.Screen>
   </Stack.Navigator>
 );
 
