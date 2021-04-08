@@ -1,39 +1,43 @@
 import React from "react";
-import { View, StyleSheet, Image } from "react-native";
+import { View, StyleSheet, Image, TouchableHighlight } from "react-native";
 
 import colors from "../config/colors";
 import AppText from "./AppText";
-import Heading from "./Heading";
 
-function Card({ title, subtitle, image }) {
+function ListItem({ title, subtitle, image, onPress }) {
   return (
-    <View style={styles.card}>
+    <TouchableHighlight underlayColor={"transparent"} onPress={onPress}>
+    <View style={styles.container}>
       <Image style={styles.image} source={image} />
       <View style={styles.detailsContainer}>
         <AppText style={styles.title}>{title}</AppText>
         <AppText>{subtitle}</AppText>
       </View>
     </View>
+    </TouchableHighlight>
   );
 }
 
 const styles = StyleSheet.create({
-  card: {
+  container: {
+    padding: 10,
     backgroundColor: colors.secondary,
     borderRadius: 15,
+    marginHorizontal: 20,
     marginBottom: 20,
-    overflow: "hidden",
+    
   },
   detailsContainer: {
     padding: 20,
   },
   image: {
     width: "100%",
-    height: 200,
+    height: 100,
+    borderRadius: 10,
   },
   title: {
     marginBottom: 7,
   },
 });
 
-export default Card;
+export default ListItem;

@@ -20,7 +20,7 @@ import TestDetailsScreen from "./app/screens/TestDetailsScreen";
 const Stack = createStackNavigator();
 const StackNavigator = () => (
   <Stack.Navigator
-    initialRouteName="TestDetail"
+    initialRouteName="History"
     screenOptions={{ headerShown: false }}
   >
     <Stack.Screen name="Login" component={LoginScreen}></Stack.Screen>

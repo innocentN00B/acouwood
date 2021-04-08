@@ -1,20 +1,44 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import {useState} from 'react';
+import { FlatList, StyleSheet} from "react-native";
 
-import Screen from "../components/Screen";
-import Card from "../components/Card";
+import ListItem from '../components/ListItem';
+import Screen from '../components/Screen';
+import Heading from '../components/Heading';
+import Icon from '../components/Icon';
 
-function HistoryScreen(navigation) {
+const tests = [{
+  id: 1,
+  title: 'Almindeligt træ',
+  date: '8/4-2021 kl. 12:33',
+  image: require('../assets/background.png')
+}, 
+{
+  id: 2,
+  title: 'CLT træ',
+  date: '9/4-2021 kl. 12:33',
+  image: require('../assets/background.png')
+}, 
+
+]
+
+function HistoryScreen( {navigation}) {
+  const[refreshing, setRefreshing] = useState(false);
+
+
   return (
     <Screen>
-      <Card
-        title="Report 1"
-        subtitle="hej"
-        image={require("../assets/background.png")}
-      />
+    <Heading>Historik</Heading>
+    <FlatList data={tests} 
+    keyExtractor={test => test.id.toString()}
+    renderItem={({item})=> <ListItem title={item.title} subtitle={item.date} image={item.image} onPress={() => navigation.navigate("TestDetail")}/>} refreshing={refreshing} onRefresh={() => {console.log("Lav en fed refresh, når backend er connected")}}/>
+    
     </Screen>
+    
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  
+});
 export default HistoryScreen;
