@@ -6,6 +6,11 @@ import { AppForm, AppFormField, SubmitButton } from "../components/forms";
 import Heading from "../components/Heading";
 import LogoSvg from "../../svgs/LogoSvg";
 import Screen from "../components/Screen";
+import {
+  FirebaseRecaptchaVerifierModal,
+  FirebaseRecaptchaBanner,
+} from "expo-firebase-recaptcha";
+import { TextInput } from "react-native-gesture-handler";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
@@ -26,12 +31,10 @@ function LoginScreen({ navigation }) {
           validationSchema={validationSchema}
         >
           <AppFormField
-            autoCapitalize="none"
-            autoCorrect={false}
             icon="email"
-            keyboardType="email-address"
+            keyboardType="phone-pad"
             name="email"
-            placeholder="Email"
+            placeholder="+45 12 34 56 78"
             textContentType="emailAddress"
           ></AppFormField>
           <AppFormField
