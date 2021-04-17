@@ -3,7 +3,6 @@ import { StyleSheet, View, Image } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as Yup from "yup";
-import Location from "expo-location";
 
 import { AppForm, AppFormField, SubmitButton } from "../components/forms";
 import AppText from "../components/AppText";
@@ -47,10 +46,10 @@ function ResultScreen({ navigation, route }) {
     <Screen>
       <View style={styles.container}>
         <Heading>Resultat</Heading>
-        <AppText>{route.params.title}</AppText>
+        <AppText>Placeholder</AppText>
         <AppForm
           initialValues={{ location: "", name: "", customer: "", comment: "" }}
-          onSubmit={(values) => console.log(location)}
+          onSubmit={(values) => console.log(values)}
           validationSchema={validationSchema}
         >
           <AppFormField

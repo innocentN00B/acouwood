@@ -3,21 +3,45 @@ import { StyleSheet, View } from "react-native";
 import * as Yup from "yup";
 
 import { AppForm, AppFormField, SubmitButton } from "../components/forms";
+import { firebase } from "../../src/firebase/config";
 import Heading from "../components/Heading";
 import LogoSvg from "../../svgs/LogoSvg";
 import Screen from "../components/Screen";
-import {
-  FirebaseRecaptchaVerifierModal,
-  FirebaseRecaptchaBanner,
-} from "expo-firebase-recaptcha";
-import { TextInput } from "react-native-gesture-handler";
+import RoundButton from "../components/RoundButton";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
   password: Yup.string().required().label("Password"),
 });
 
-function LoginScreen({ navigation }) {
+function LoginScreen({ navigation, route }) {
+  const onLoginPress = (values) => {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(values.email, values.password)
+      .then((response) => {
+        const uid = response.user.uid;
+        const usersRef = firebase.firestore().collection("users");
+        usersRef
+          .doc(uid)
+          .get()
+          .then((firestoreDocument) => {
+            if (!firestoreDocument.exists) {
+              alert("User does not exist anymore.");
+              return;
+            }
+            const user = firestoreDocument.data();
+            navigation.navigate("Home", { user });
+          })
+          .catch((error) => {
+            alert(error);
+          });
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
+
   return (
     <Screen>
       <View style={styles.logoContainer}>
@@ -27,14 +51,14 @@ function LoginScreen({ navigation }) {
       <View style={styles.formContainer}>
         <AppForm
           initialValues={{ email: "", password: "" }}
-          onSubmit={(values) => navigation.navigate("Home", { id: 1 })}
+          onSubmit={onLoginPress}
           validationSchema={validationSchema}
         >
           <AppFormField
             icon="email"
-            keyboardType="phone-pad"
+            keyboardType="email-address"
             name="email"
-            placeholder="+45 12 34 56 78"
+            placeholder="kenneth@jjensengenbyg.dk"
             textContentType="emailAddress"
           ></AppFormField>
           <AppFormField
@@ -48,6 +72,10 @@ function LoginScreen({ navigation }) {
           ></AppFormField>
           <SubmitButton title="Login" />
         </AppForm>
+        <RoundButton
+          title="Register"
+          onPress={() => navigation.navigate("Register")}
+        />
       </View>
     </Screen>
   );

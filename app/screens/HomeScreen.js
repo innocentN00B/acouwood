@@ -5,7 +5,6 @@ import Screen from "../components/Screen";
 import Heading from "../components/Heading";
 import colors from "../config/colors";
 import NoTextLogoSvg from "../../svgs/NoTextLogoSvg";
-import { NavigationContainer } from "@react-navigation/native";
 
 function HomeScreen({ route, navigation }) {
   return (
@@ -17,7 +16,7 @@ function HomeScreen({ route, navigation }) {
         >
           <NoTextLogoSvg />
         </TouchableOpacity>
-        <Heading>Start test {route.params.id}</Heading>
+        <Heading>Start test</Heading>
       </View>
     </Screen>
   );
