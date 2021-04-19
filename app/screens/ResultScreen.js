@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, Image } from "react-native";
+import { StyleSheet, View, Image, Keyboard } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as Yup from "yup";
@@ -7,6 +7,7 @@ import * as Yup from "yup";
 import { AppForm, AppFormField, SubmitButton } from "../components/forms";
 import AppText from "../components/AppText";
 import RoundButton from "../components/RoundButton";
+import { firebase } from "../../src/firebase/config";
 import Heading from "../components/Heading";
 import Screen from "../components/Screen";
 import colors from "../config/colors";
@@ -25,6 +26,7 @@ function ResultScreen({ navigation, route }) {
   const [testData, setTestData] = useState("");
   const [tests, setTests] = useState([]);
   const testRef = firebase.firestore().collection("tests");
+  const userID = firebase.auth().currentUser.uid;
 
   //Getting users permission to the camera and photo library
   const requestCameraPermission = async () => {
@@ -45,13 +47,38 @@ function ResultScreen({ navigation, route }) {
     }
   };
 
+  useEffect(() => {
+    testRef
+      .where("testerID", "==", userID)
+      .orderBy("createdAt", "desc")
+      .onSnapshot(
+        (querySnapshot) => {
+          const newTests = [];
+          querySnapshot.forEach((doc) => {
+            const test = doc.data();
+            test.id = doc.id;
+            newTests.push(test);
+          });
+          setTests(newTests);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  }, []);
+
   return (
     <Screen>
       <View style={styles.container}>
         <Heading>Resultat</Heading>
         <AppText>Placeholder</AppText>
         <AppForm
-          initialValues={{ location: "", name: "", customer: "", comment: "" }}
+          initialValues={{
+            location: "",
+            name: "",
+            customer: "",
+            comment: "",
+          }}
           onSubmit={(values) => console.log(values)}
           validationSchema={validationSchema}
         >
