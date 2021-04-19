@@ -22,6 +22,9 @@ const validationSchema = Yup.object().shape({
 function ResultScreen({ navigation, route }) {
   const [imageUri, setImageUri] = useState();
   const location = useLocation();
+  const [testData, setTestData] = useState("");
+  const [tests, setTests] = useState([]);
+  const testRef = firebase.firestore().collection("tests");
 
   //Getting users permission to the camera and photo library
   const requestCameraPermission = async () => {

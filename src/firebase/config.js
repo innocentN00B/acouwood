@@ -16,4 +16,18 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
 
+// Get Firebase Cloud Firestore
+var db = firebase.firestore();
+
+// Get Firebase Storage reference, which is used to create references to the storage bucket
+var storage = firebase.storage().ref();
+
+export async function getUser() {
+  const user = firebase.auth();
+  if (user) {
+    console.log("User from firebase: " + user.email);
+  }
+  return user;
+}
+
 export { firebase };
