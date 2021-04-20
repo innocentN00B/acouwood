@@ -7,10 +7,17 @@ import { firebase } from "../../src/firebase/config";
 import Heading from "../components/Heading";
 import colors from "../config/colors";
 import NoTextLogoSvg from "../../svgs/NoTextLogoSvg";
+import RoundButton from "../components/RoundButton";
+import { loggingOut } from "../api/firebaseMethods";
 
 function HomeScreen({ navigation }) {
   let currentUserUID = firebase.auth().currentUser.uid;
   const [fullName, setName] = useState("");
+
+  const handlePress = () => {
+    loggingOut();
+    navigation.replace("Home");
+  };
 
   useEffect(() => {
     async function getUserInfo() {

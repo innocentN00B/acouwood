@@ -8,13 +8,14 @@ import Heading from "../components/Heading";
 import LogoSvg from "../../svgs/LogoSvg";
 import Screen from "../components/Screen";
 import RoundButton from "../components/RoundButton";
+import { signIn, loggingOut } from "../api/firebaseMethods";
 
 const validationSchema = Yup.object().shape({
   email: Yup.string().required().email().label("Email"),
   password: Yup.string().required().label("Password"),
 });
 
-function LoginScreen({ navigation, route }) {
+function LoginScreen({ navigation }) {
   const onLoginPress = (values) => {
     firebase
       .auth()
@@ -51,7 +52,7 @@ function LoginScreen({ navigation, route }) {
       <View style={styles.formContainer}>
         <AppForm
           initialValues={{ email: "", password: "" }}
-          onSubmit={onLoginPress}
+          onSubmit={(values) => signIn(values.email, values.password)}
           validationSchema={validationSchema}
         >
           <AppFormField

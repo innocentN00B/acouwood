@@ -7,6 +7,7 @@ import colors from "../config/colors";
 import { firebase } from "../../src/firebase/config";
 import Heading from "../components/Heading";
 import Screen from "../components/Screen";
+import { registration } from "../api/firebaseMethods";
 
 const validationSchema = Yup.object().shape({
   fullName: Yup.string()
@@ -62,7 +63,9 @@ function RegisterScreen({ navigation, route }) {
             password: "",
             passwordConfirmation: "",
           }}
-          onSubmit={onRegisterPress}
+          onSubmit={(values) =>
+            registration(values.email, values.password, values.fullName)
+          }
           validationSchema={validationSchema}
         >
           <AppFormField

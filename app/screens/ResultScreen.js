@@ -12,6 +12,7 @@ import Heading from "../components/Heading";
 import Screen from "../components/Screen";
 import colors from "../config/colors";
 import useLocation from "../hooks/useLocation";
+import { newTest } from "../api/firebaseMethods";
 
 const validationSchema = Yup.object().shape({
   location: Yup.string().required().label("Location"),
@@ -47,39 +48,22 @@ function ResultScreen({ navigation, route }) {
     }
   };
 
-  useEffect(() => {
-    testRef
-      .where("testerID", "==", userID)
-      .orderBy("createdAt", "desc")
-      .onSnapshot(
-        (querySnapshot) => {
-          const newTests = [];
-          querySnapshot.forEach((doc) => {
-            const test = doc.data();
-            test.id = doc.id;
-            newTests.push(test);
-          });
-          setTests(newTests);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-  }, []);
-
   return (
     <Screen>
       <View style={styles.container}>
         <Heading>Resultat</Heading>
-        <AppText>Placeholder</AppText>
+        <AppText>{route.params.title}</AppText>
         <AppForm
           initialValues={{
-            location: "",
-            name: "",
-            customer: "",
             comment: "",
+            customer: "",
+            imageUri: "",
+            name: "",
+            location: "",
           }}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={(values) =>
+            newTest(values.comment, values.customer, imageUri, values.location)
+          }
           validationSchema={validationSchema}
         >
           <AppFormField

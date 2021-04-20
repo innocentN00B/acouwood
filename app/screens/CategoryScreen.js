@@ -18,11 +18,13 @@ function CategoryScreen({ navigation }) {
         ></CategoryButton>
         <CategoryButton
           title="CLT træ"
-          onPress={() => console.log()}
+          onPress={() => navigation.navigate("Result", { title: "CLT træ" })}
         ></CategoryButton>
         <CategoryButton
           title="Lamineret træ"
-          onPress={() => console.log()}
+          onPress={() =>
+            navigation.navigate("Result", { title: "Lamineret træ" })
+          }
         ></CategoryButton>
       </View>
     </Screen>
