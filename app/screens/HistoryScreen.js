@@ -1,40 +1,53 @@
 import React from "react";
-import { useState } from "react";
-import { FlatList, StyleSheet } from "react-native";
+import { useState, useEffect } from "react";
+import { FlatList, StyleSheet, ActivityIndicator, Image } from "react-native";
 
+import * as firebase from "firebase";
 import ListItem from "../components/ListItem";
 import Screen from "../components/Screen";
 import Heading from "../components/Heading";
-
-const tests = [
-  {
-    id: 1,
-    title: "Almindeligt træ",
-    date: "8/4-2021 kl. 12:33",
-    image: require("../assets/background.png"),
-  },
-  {
-    id: 2,
-    title: "CLT træ",
-    date: "9/4-2021 kl. 12:33",
-    image: require("../assets/background.png"),
-  },
-];
+import { downloadImage } from "../api/firebaseMethods";
 
 function HistoryScreen({ navigation }) {
   const [refreshing, setRefreshing] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [tests, setTests] = useState([]);
+
+  useEffect(() => {
+    const test = firebase
+      .firestore()
+      .collection("tests")
+      .onSnapshot((querySnapshot) => {
+        const tests = [];
+        querySnapshot.forEach((documentSnapshot) => {
+          tests.push({
+            ...documentSnapshot.data(),
+            key: documentSnapshot.id,
+          });
+        });
+        setTests(tests);
+        // console.log(tests);
+        setLoading(false);
+      });
+
+    // Unsubscribe from events when no longer in use
+    return () => test();
+  }, []);
+
+  if (loading) {
+    return <ActivityIndicator />;
+  }
 
   return (
     <Screen>
-      <Heading>Historik</Heading>
+      <Heading>Recent tests</Heading>
       <FlatList
         data={tests}
-        keyExtractor={(test) => test.id.toString()}
         renderItem={({ item }) => (
           <ListItem
-            title={item.title}
-            subtitle={item.date}
-            image={item.image}
+            title={item.name}
+            subtitle={item.customer}
+            image={"item.image"}
             onPress={() => navigation.navigate("TestDetail")}
           />
         )}

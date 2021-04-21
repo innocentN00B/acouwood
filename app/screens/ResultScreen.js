@@ -5,29 +5,24 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as Yup from "yup";
 
 import { AppForm, AppFormField, SubmitButton } from "../components/forms";
-import AppText from "../components/AppText";
+import TextSquare from "../components/TextSquare";
 import RoundButton from "../components/RoundButton";
-import { firebase } from "../../src/firebase/config";
 import Heading from "../components/Heading";
 import Screen from "../components/Screen";
 import colors from "../config/colors";
 import useLocation from "../hooks/useLocation";
-import { newTest } from "../api/firebaseMethods";
+import { downloadImage, newTest, uploadImage } from "../api/firebaseMethods";
 
 const validationSchema = Yup.object().shape({
-  location: Yup.string().required().label("Location"),
-  name: Yup.string().required().label("Name"),
-  customer: Yup.string().required().label("Customer"),
-  comment: Yup.string().required().label("Comment"),
+  location: Yup.string().label("Location"),
+  name: Yup.string().label("Name"),
+  customer: Yup.string().label("Customer"),
+  comment: Yup.string().label("Comment"),
 });
 
-function ResultScreen({ navigation, route }) {
+function ResultScreen({ navigation }) {
   const [imageUri, setImageUri] = useState();
-  const location = useLocation();
-  const [testData, setTestData] = useState("");
-  const [tests, setTests] = useState([]);
-  const testRef = firebase.firestore().collection("tests");
-  const userID = firebase.auth().currentUser.uid;
+  const address = useLocation();
 
   //Getting users permission to the camera and photo library
   const requestCameraPermission = async () => {
@@ -48,11 +43,20 @@ function ResultScreen({ navigation, route }) {
     }
   };
 
+  const handleSubmit = async (values) => {
+    newTest(values.comment, values.customer, imageUri, values.location);
+    navigation.navigate("Home");
+    uploadImage(imageUri);
+    //const imageURL = await downloadImage(imageUri);
+    console.log(imageUri);
+    //console.log(imageURL);
+  };
+
   return (
     <Screen>
       <View style={styles.container}>
         <Heading>Resultat</Heading>
-        <AppText>{route.params.title}</AppText>
+        <TextSquare />
         <AppForm
           initialValues={{
             comment: "",
@@ -61,9 +65,7 @@ function ResultScreen({ navigation, route }) {
             name: "",
             location: "",
           }}
-          onSubmit={(values) =>
-            newTest(values.comment, values.customer, imageUri, values.location)
-          }
+          onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
           <AppFormField
@@ -71,7 +73,7 @@ function ResultScreen({ navigation, route }) {
             autoCorrect={true}
             icon="pin"
             name="location"
-            placeholder={JSON.stringify(location)}
+            placeholder={JSON.stringify(address)}
             textContentType="location"
           />
           <AppFormField
@@ -101,7 +103,7 @@ function ResultScreen({ navigation, route }) {
           {!imageUri && (
             <MaterialCommunityIcons
               name="camera"
-              size={100}
+              size={80}
               color={colors.dark}
             />
           )}
@@ -126,7 +128,7 @@ const styles = StyleSheet.create({
   },
   thumbnail: {
     borderRadius: 10,
-    height: 200,
+    height: 120,
     width: 300,
     borderColor: colors.dark,
   },

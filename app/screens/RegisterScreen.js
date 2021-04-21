@@ -26,32 +26,6 @@ const validationSchema = Yup.object().shape({
 });
 
 function RegisterScreen({ navigation, route }) {
-  const onRegisterPress = (values) => {
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(values.email, values.password)
-      .then((response) => {
-        const uid = response.user.uid;
-        const data = {
-          id: uid,
-          email: values.email,
-          fullName: values.fullName,
-        };
-        const usersRef = firebase.firestore().collection("users");
-        usersRef
-          .doc(uid)
-          .set(data)
-          .then(() => {
-            navigation.navigate("Home", { user: data });
-          })
-          .catch((error) => {
-            alert(error);
-          });
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  };
   return (
     <Screen>
       <View style={styles.container}>

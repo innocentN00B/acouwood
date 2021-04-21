@@ -8,11 +8,11 @@ function Heading({ children }) {
 
 const styles = StyleSheet.create({
   text: {
-    fontSize: 28,
+    fontSize: 26,
     fontFamily: "Montserrat_700Bold",
     paddingVertical: 20,
     textAlign: "center",
-    color: colors.dark
+    color: colors.dark,
   },
 });
 

@@ -17,6 +17,7 @@ import CategoryScreen from "./app/screens/CategoryScreen";
 import ResultScreen from "./app/screens/ResultScreen";
 import RegisterScreen from "./app/screens/RegisterScreen";
 import HistoryScreen from "./app/screens/HistoryScreen";
+import TestScreen from "./app/screens/TestScreen";
 import TestDetailsScreen from "./app/screens/TestDetailsScreen";
 
 const Stack = createStackNavigator();
@@ -68,6 +69,7 @@ export default function App() {
             <Stack.Screen name="Result" component={ResultScreen} />
             <Stack.Screen name="History" component={HistoryScreen} />
             <Stack.Screen name="TestDetail" component={TestDetailsScreen} />
+            <Stack.Screen name="Test" component={TestScreen} />
           </>
         ) : (
           <>

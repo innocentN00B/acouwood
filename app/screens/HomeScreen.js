@@ -8,16 +8,10 @@ import Heading from "../components/Heading";
 import colors from "../config/colors";
 import NoTextLogoSvg from "../../svgs/NoTextLogoSvg";
 import RoundButton from "../components/RoundButton";
-import { loggingOut } from "../api/firebaseMethods";
 
 function HomeScreen({ navigation }) {
   let currentUserUID = firebase.auth().currentUser.uid;
   const [fullName, setName] = useState("");
-
-  const handlePress = () => {
-    loggingOut();
-    navigation.replace("Home");
-  };
 
   useEffect(() => {
     async function getUserInfo() {
@@ -39,15 +33,18 @@ function HomeScreen({ navigation }) {
 
   return (
     <Screen>
-      <Heading>Velkommen {fullName}</Heading>
       <View style={styles.buttonContainer}>
+        <Heading>Tap to start test</Heading>
         <TouchableOpacity
           style={styles.startButton}
           onPress={() => navigation.navigate("Category")}
         >
           <NoTextLogoSvg />
         </TouchableOpacity>
-        <Heading>Start test</Heading>
+        <RoundButton
+          title="History"
+          onPress={() => navigation.navigate("History")}
+        />
       </View>
     </Screen>
   );

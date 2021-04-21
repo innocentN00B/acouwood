@@ -12,19 +12,15 @@ function CategoryScreen({ navigation }) {
         <Heading>Hvilket type træ skal du måle på?</Heading>
         <CategoryButton
           title="Almindeligt træ"
-          onPress={() =>
-            navigation.navigate("Result", { title: "Almindeligt træ" })
-          }
+          onPress={() => navigation.navigate("Test")}
         ></CategoryButton>
         <CategoryButton
           title="CLT træ"
-          onPress={() => navigation.navigate("Result", { title: "CLT træ" })}
+          onPress={() => navigation.navigate("Test")}
         ></CategoryButton>
         <CategoryButton
           title="Lamineret træ"
-          onPress={() =>
-            navigation.navigate("Result", { title: "Lamineret træ" })
-          }
+          onPress={() => navigation.navigate("Test")}
         ></CategoryButton>
       </View>
     </Screen>

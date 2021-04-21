@@ -1,4 +1,3 @@
-import { useNavigation } from "@react-navigation/core";
 import * as firebase from "firebase";
 import "firebase/firestore";
 import { Alert } from "react-native";
@@ -61,4 +60,20 @@ export async function newTest(comment, customer, image, location) {
   } catch (err) {
     Alert.alert("Something went wrong: ", err.message);
   }
+}
+
+export async function uploadImage(imageUri) {
+  const response = await fetch(imageUri);
+  const blob = await response.blob();
+
+  var ref = firebase.storage().ref().child(imageUri);
+  return ref.put(blob);
+}
+
+export async function downloadImage(imageUri) {
+  var ref = firebase.storage().ref(imageUri);
+  console.log(ref);
+  const url = await ref.getDownloadURL();
+  console.log(url);
+  return url;
 }
