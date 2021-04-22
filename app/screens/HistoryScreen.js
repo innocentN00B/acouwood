@@ -26,7 +26,6 @@ function HistoryScreen({ navigation }) {
           });
         });
         setTests(tests);
-        // console.log(tests);
         setLoading(false);
       });
 
@@ -47,7 +46,7 @@ function HistoryScreen({ navigation }) {
           <ListItem
             title={item.name}
             subtitle={item.customer}
-            image={"item.image"}
+            image={{ uri: item.url }}
             onPress={() => navigation.navigate("TestDetail")}
           />
         )}

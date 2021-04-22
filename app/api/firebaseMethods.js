@@ -33,47 +33,40 @@ export async function loggingOut() {
   }
 }
 
-export async function newTest(comment, customer, image, location) {
+export async function newTest(comment, customer, image, location, testID) {
   try {
     const db = firebase.firestore();
     const currentUser = firebase.auth().currentUser;
 
-    db.collection("tests").add({
+    const res = await db.collection("tests").add({
       comment: comment,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       customer: customer,
       image: image,
       location: location,
       testerID: currentUser.uid,
+      testID: testID,
     });
-    console.log(
-      "New test created with values: comment: " +
-        comment +
-        " customer: " +
-        customer +
-        " imageUri: {" +
-        image +
-        "} " +
-        "location: " +
-        location
-    );
+    await uploadImage(image, testID);
+    await downloadImage(testID, res.id);
+    console.log("New test generated");
   } catch (err) {
     Alert.alert("Something went wrong: ", err.message);
   }
 }
 
-export async function uploadImage(imageUri) {
+export async function uploadImage(imageUri, testID) {
   const response = await fetch(imageUri);
   const blob = await response.blob();
-
-  var ref = firebase.storage().ref().child(imageUri);
+  var ref = firebase.storage().ref().child(testID);
+  console.log("Image to testID: " + testID + " succesfully uploaded.");
   return ref.put(blob);
 }
 
-export async function downloadImage(imageUri) {
-  var ref = firebase.storage().ref(imageUri);
-  console.log(ref);
+export async function downloadImage(testID, doc) {
+  var ref = firebase.storage().ref(testID);
   const url = await ref.getDownloadURL();
-  console.log(url);
+  firebase.firestore().collection("tests").doc(doc).update({ url: url });
+  console.log("Image to testID: " + testID + " succesfully downloaded." + url);
   return url;
 }

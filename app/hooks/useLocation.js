@@ -1,6 +1,5 @@
 import * as Location from "expo-location";
 import { useEffect, useState } from "react";
-import { add } from "react-native-reanimated";
 
 const useLocation = () => {
   const [location, setLocation] = useState();
@@ -10,13 +9,11 @@ const useLocation = () => {
     try {
       const { granted } = await Location.requestPermissionsAsync();
       if (!granted) return;
-      const {
-        coords: { latitude, longitude },
-      } = await Location.getLastKnownPositionAsync();
-      setLocation({ latitude, longitude });
+      location = await Location.getLastKnownPositionAsync();
+      setLocation(location);
       const address = await Location.reverseGeocodeAsync(location);
       setAddress(address);
-      console.log(address);
+      console.log(location);
     } catch (error) {
       console.log(error);
     }

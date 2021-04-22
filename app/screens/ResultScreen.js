@@ -3,6 +3,8 @@ import { StyleSheet, View, Image, Keyboard } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as Yup from "yup";
+import { v4 as uuidv4 } from "uuid";
+import "react-native-get-random-values";
 
 import { AppForm, AppFormField, SubmitButton } from "../components/forms";
 import TextSquare from "../components/TextSquare";
@@ -11,7 +13,7 @@ import Heading from "../components/Heading";
 import Screen from "../components/Screen";
 import colors from "../config/colors";
 import useLocation from "../hooks/useLocation";
-import { downloadImage, newTest, uploadImage } from "../api/firebaseMethods";
+import { newTest } from "../api/firebaseMethods";
 
 const validationSchema = Yup.object().shape({
   location: Yup.string().label("Location"),
@@ -44,12 +46,9 @@ function ResultScreen({ navigation }) {
   };
 
   const handleSubmit = async (values) => {
-    newTest(values.comment, values.customer, imageUri, values.location);
+    const testID = uuidv4();
+    newTest(values.comment, values.customer, imageUri, values.location, testID);
     navigation.navigate("Home");
-    uploadImage(imageUri);
-    //const imageURL = await downloadImage(imageUri);
-    console.log(imageUri);
-    //console.log(imageURL);
   };
 
   return (
@@ -73,7 +72,7 @@ function ResultScreen({ navigation }) {
             autoCorrect={true}
             icon="pin"
             name="location"
-            placeholder={JSON.stringify(address)}
+            placeholder={address}
             textContentType="location"
           />
           <AppFormField

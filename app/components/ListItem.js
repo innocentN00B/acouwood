@@ -7,13 +7,13 @@ import AppText from "./AppText";
 function ListItem({ title, subtitle, image, onPress }) {
   return (
     <TouchableHighlight underlayColor={"transparent"} onPress={onPress}>
-    <View style={styles.container}>
-      <Image style={styles.image} source={image} />
-      <View style={styles.detailsContainer}>
-        <AppText style={styles.title}>{title}</AppText>
-        <AppText>{subtitle}</AppText>
+      <View style={styles.container}>
+        <Image style={styles.image} source={image} />
+        <View style={styles.detailsContainer}>
+          <AppText style={styles.title}>{title}</AppText>
+          <AppText>{subtitle}</AppText>
+        </View>
       </View>
-    </View>
     </TouchableHighlight>
   );
 }
@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     marginHorizontal: 20,
     marginBottom: 20,
-    
   },
   detailsContainer: {
     padding: 20,
