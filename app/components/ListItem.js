@@ -3,6 +3,7 @@ import { View, StyleSheet, Image, TouchableHighlight } from "react-native";
 
 import colors from "../config/colors";
 import AppText from "./AppText";
+import ListItemSeperator from "./ListItemSeperator";
 
 function ListItem({ title, subtitle, image, onPress }) {
   return (
@@ -13,6 +14,7 @@ function ListItem({ title, subtitle, image, onPress }) {
           <AppText style={styles.title}>{title}</AppText>
           <AppText>{subtitle}</AppText>
         </View>
+        <ListItemSeperator />
       </View>
     </TouchableHighlight>
   );
@@ -20,19 +22,19 @@ function ListItem({ title, subtitle, image, onPress }) {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 10,
-    backgroundColor: colors.secondary,
-    borderRadius: 15,
-    marginHorizontal: 20,
-    marginBottom: 20,
+    padding: 20,
+    backgroundColor: colors.primary,
+    marginBottom: 0,
   },
   detailsContainer: {
-    padding: 20,
+    padding: 10,
   },
   image: {
-    width: "100%",
+    width: 100,
     height: 100,
     borderRadius: 10,
+    borderColor: colors.accent,
+    borderWidth: 1,
   },
   title: {
     marginBottom: 7,

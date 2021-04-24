@@ -3,17 +3,17 @@ import { useEffect, useState } from "react";
 
 const useLocation = () => {
   const [location, setLocation] = useState();
-  const [address, setAddress] = useState();
 
   const requestLocationPermission = async () => {
     try {
       const { granted } = await Location.requestPermissionsAsync();
       if (!granted) return;
-      location = await Location.getLastKnownPositionAsync();
-      setLocation(location);
-      const address = await Location.reverseGeocodeAsync(location);
-      setAddress(address);
-      console.log(location);
+      const {
+        coords: { latitude, longitude },
+      } = await Location.getLastKnownPositionAsync();
+      setLocation({ latitude, longitude });
+      const place = await Location.reverseGeocodeAsync(location);
+      setLocation(place);
     } catch (error) {
       console.log(error);
     }
@@ -22,7 +22,7 @@ const useLocation = () => {
   useEffect(() => {
     requestLocationPermission();
   }, []);
-  return address;
+  return location;
 };
 
 export default useLocation;

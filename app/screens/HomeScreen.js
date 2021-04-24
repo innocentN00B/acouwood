@@ -1,6 +1,12 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { TouchableOpacity, StyleSheet, View } from "react-native";
+import {
+  TouchableOpacity,
+  StyleSheet,
+  View,
+  ActivityIndicator,
+  Dimensions,
+} from "react-native";
 
 import Screen from "../components/Screen";
 import { firebase } from "../../src/firebase/config";
@@ -8,28 +14,40 @@ import Heading from "../components/Heading";
 import colors from "../config/colors";
 import NoTextLogoSvg from "../../svgs/NoTextLogoSvg";
 import RoundButton from "../components/RoundButton";
+import ScrollBottomSheet from "react-native-scroll-bottom-sheet";
+import ListItem from "../components/ListItem";
+import ListItemSeperator from "../components/ListItemSeperator";
 
 function HomeScreen({ navigation }) {
-  let currentUserUID = firebase.auth().currentUser.uid;
-  const [fullName, setName] = useState("");
+  const windowHeight = Dimensions.get("window").height;
+  const [refreshing, setRefreshing] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [tests, setTests] = useState([]);
 
   useEffect(() => {
-    async function getUserInfo() {
-      let doc = await firebase
-        .firestore()
-        .collection("users")
-        .doc(currentUserUID)
-        .get();
+    const test = firebase
+      .firestore()
+      .collection("tests")
+      .onSnapshot((querySnapshot) => {
+        const tests = [];
+        querySnapshot.forEach((documentSnapshot) => {
+          //Lav et loop der formaterer timestamp til et date objekt
+          tests.push({
+            ...documentSnapshot.data(),
+            key: documentSnapshot.id,
+          });
+        });
+        setTests(tests);
+        setLoading(false);
+      });
 
-      if (!doc.exists) {
-        Alert.alert("No user data found!");
-      } else {
-        let dataObj = doc.data();
-        setName(dataObj.fullName);
-      }
-    }
-    getUserInfo();
-  });
+    // Unsubscribe from events when no longer in use
+    return () => test();
+  }, []);
+
+  if (loading) {
+    return <ActivityIndicator />;
+  }
 
   return (
     <Screen>
@@ -41,9 +59,25 @@ function HomeScreen({ navigation }) {
         >
           <NoTextLogoSvg />
         </TouchableOpacity>
-        <RoundButton
-          title="History"
-          onPress={() => navigation.navigate("History")}
+        <ScrollBottomSheet
+          componentType="FlatList"
+          snapPoints={[96, "45%", windowHeight - 264]}
+          initialSnapIndex={2}
+          renderHandle={() => (
+            <View style={styles.header}>
+              <View style={styles.panelHandle} />
+            </View>
+          )}
+          data={tests}
+          renderItem={({ item }) => (
+            <ListItem
+              title={item.customer}
+              subtitle={item.comment}
+              image={{ uri: item.url }}
+              onPress={() => navigation.navigate("TestDetail")}
+            />
+          )}
+          contentContainerStyle={styles.contentContainerStyle}
         />
       </View>
     </Screen>
@@ -74,6 +108,30 @@ const styles = StyleSheet.create({
     elevation: 5,
     justifyContent: "center",
     alignItems: "center",
+  },
+  contentContainerStyle: {
+    backgroundColor: colors.light,
+    paddingVertical: 15,
+  },
+  header: {
+    alignItems: "center",
+    backgroundColor: colors.light,
+    paddingVertical: 30,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  panelHandle: {
+    width: 40,
+    height: 2,
+    backgroundColor: colors.accent,
+    borderRadius: 4,
+  },
+  item: {
+    padding: 20,
+    justifyContent: "center",
+    backgroundColor: colors.light,
+    alignItems: "center",
+    marginVertical: 10,
   },
 });
 

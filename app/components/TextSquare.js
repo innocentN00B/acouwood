@@ -13,7 +13,7 @@ function TextCircle(props) {
 
 const styles = StyleSheet.create({
   circle: {
-    borderRadius: 40,
+    borderRadius: 20,
     backgroundColor: colors.normal,
     height: "10%",
     width: "80%",
@@ -21,6 +21,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     alignSelf: "center",
     margin: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
   },
 });
 

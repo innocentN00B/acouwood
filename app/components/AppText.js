@@ -1,10 +1,18 @@
 import React from "react";
-import { Text } from "react-native";
+import { Text, StyleSheet } from "react-native";
 
-import defaultStyles from "../config/styles";
+import colors from "../config/colors";
 
-function AppText({ children, style }) {
-  return <Text style={[defaultStyles.text, style]}> {children}</Text>;
+function AppText({ children }) {
+  return <Text style={styles.text}> {children}</Text>;
 }
+
+const styles = StyleSheet.create({
+  text: {
+    color: colors.dark,
+    fontSize: 18,
+    fontFamily: "Montserrat_700Bold",
+  },
+});
 
 export default AppText;

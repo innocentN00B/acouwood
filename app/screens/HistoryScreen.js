@@ -6,7 +6,6 @@ import * as firebase from "firebase";
 import ListItem from "../components/ListItem";
 import Screen from "../components/Screen";
 import Heading from "../components/Heading";
-import { downloadImage } from "../api/firebaseMethods";
 
 function HistoryScreen({ navigation }) {
   const [refreshing, setRefreshing] = useState(false);
@@ -20,6 +19,7 @@ function HistoryScreen({ navigation }) {
       .onSnapshot((querySnapshot) => {
         const tests = [];
         querySnapshot.forEach((documentSnapshot) => {
+          //Lav et loop der formaterer timestamp til et date objekt
           tests.push({
             ...documentSnapshot.data(),
             key: documentSnapshot.id,
@@ -44,8 +44,8 @@ function HistoryScreen({ navigation }) {
         data={tests}
         renderItem={({ item }) => (
           <ListItem
-            title={item.name}
-            subtitle={item.customer}
+            title={item.customer}
+            subtitle={item.comment}
             image={{ uri: item.url }}
             onPress={() => navigation.navigate("TestDetail")}
           />

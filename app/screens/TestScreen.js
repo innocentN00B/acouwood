@@ -11,11 +11,11 @@ function TestScreen({ navigation }) {
   return (
     <Screen>
       <View style={styles.container}>
-        <AppText>Test udført succesfuldt</AppText>
-        <Heading>Resultat</Heading>
+        <AppText>Test was succesfully made</AppText>
+        <Heading>Result</Heading>
         <TextCircle />
         <RoundButton
-          title={"Gem test"}
+          title={"Save"}
           onPress={() => navigation.navigate("Result")}
         />
       </View>

@@ -1,6 +1,25 @@
 import * as firebase from "firebase";
 import "firebase/firestore";
-import { Alert } from "react-native";
+
+export async function getUser() {
+  try {
+    const currentUser = firebase.auth().currentUser;
+    const db = firebase.firestore();
+    const user = db
+      .collection("users")
+      .doc(currentUser.uid)
+      .get()
+      .then((documentSnapshot) => {
+        console.log("User exists: ", documentSnapshot.exists);
+        if (documentSnapshot.exists) {
+          console.log("User data: ", documentSnapshot.data());
+        }
+      });
+    return user;
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 export async function registration(email, password, fullName) {
   try {
@@ -12,8 +31,8 @@ export async function registration(email, password, fullName) {
       email: currentUser.email,
       fullName: fullName,
     });
-  } catch (err) {
-    Alert.alert("Something went wrong: ", err.message);
+  } catch (error) {
+    console.log(error);
   }
 }
 
@@ -21,17 +40,19 @@ export async function signIn(email, password) {
   try {
     await firebase.auth().signInWithEmailAndPassword(email, password);
   } catch (err) {
-    Alert.alert("Something went wrong: ", err.message);
+    console.log(error);
   }
 }
 
 export async function loggingOut() {
   try {
     await firebase.auth().signOut();
-  } catch (err) {
-    Alert.alert("Something went wrong: ", err.message);
+  } catch (error) {
+    console.log(error);
   }
 }
+
+export async function getUserInfo() {}
 
 export async function newTest(comment, customer, image, location, testID) {
   try {
@@ -50,8 +71,8 @@ export async function newTest(comment, customer, image, location, testID) {
     await uploadImage(image, testID);
     await downloadImage(testID, res.id);
     console.log("New test generated");
-  } catch (err) {
-    Alert.alert("Something went wrong: ", err.message);
+  } catch (error) {
+    console.log(error);
   }
 }
 

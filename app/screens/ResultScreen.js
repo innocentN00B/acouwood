@@ -13,7 +13,9 @@ import Heading from "../components/Heading";
 import Screen from "../components/Screen";
 import colors from "../config/colors";
 import useLocation from "../hooks/useLocation";
-import { newTest } from "../api/firebaseMethods";
+import { newTest, getUserInfo } from "../api/firebaseMethods";
+import * as firebase from "firebase";
+import "firebase/firestore";
 
 const validationSchema = Yup.object().shape({
   location: Yup.string().label("Location"),
@@ -24,7 +26,26 @@ const validationSchema = Yup.object().shape({
 
 function ResultScreen({ navigation }) {
   const [imageUri, setImageUri] = useState();
-  const address = useLocation();
+  let currentUserUID = firebase.auth().currentUser.uid;
+  const [fullName, setName] = useState("");
+
+  useEffect(() => {
+    async function getUserInfo() {
+      let doc = await firebase
+        .firestore()
+        .collection("users")
+        .doc(currentUserUID)
+        .get();
+
+      if (!doc.exists) {
+        Alert.alert("No user data found!");
+      } else {
+        let dataObj = doc.data();
+        setName(dataObj.fullName);
+      }
+    }
+    getUserInfo();
+  });
 
   //Getting users permission to the camera and photo library
   const requestCameraPermission = async () => {
@@ -54,7 +75,7 @@ function ResultScreen({ navigation }) {
   return (
     <Screen>
       <View style={styles.container}>
-        <Heading>Resultat</Heading>
+        <Heading>Result</Heading>
         <TextSquare />
         <AppForm
           initialValues={{
@@ -68,11 +89,10 @@ function ResultScreen({ navigation }) {
           validationSchema={validationSchema}
         >
           <AppFormField
-            autoCapitalize="none"
             autoCorrect={true}
             icon="pin"
             name="location"
-            placeholder={address}
+            placeholder={"Stavnsbjerg Alle 44"}
             textContentType="location"
           />
           <AppFormField
@@ -80,7 +100,7 @@ function ResultScreen({ navigation }) {
             autoCorrect={true}
             icon="account-cowboy-hat"
             name="name"
-            placeholder="NamePlaceholder"
+            placeholder={fullName}
             textContentType="name"
           />
           <AppFormField
@@ -88,7 +108,7 @@ function ResultScreen({ navigation }) {
             autoCorrect={true}
             icon="briefcase"
             name="customer"
-            placeholder="CustomerPlaceholder"
+            placeholder="Customer"
             textContentType="organizationName"
           />
           <AppFormField
@@ -96,25 +116,23 @@ function ResultScreen({ navigation }) {
             autoCorrect={true}
             icon="comment"
             name="comment"
-            placeholder="CommentPlaceholder"
+            placeholder="Comment"
             textContentType="none"
           />
           {!imageUri && (
-            <MaterialCommunityIcons
-              name="camera"
-              size={80}
-              color={colors.dark}
+            <RoundButton
+              title="Upload billede"
+              onPress={takePicture}
+              backgroundColor={colors.primary}
+              borderColor={colors.secondary}
+              color={colors.accent}
             />
           )}
           {imageUri && (
             <Image source={{ uri: imageUri }} style={styles.thumbnail} />
           )}
-          <RoundButton
-            title="Upload billede"
-            onPress={takePicture}
-            color="light"
-          />
-          <SubmitButton title="Gem test" />
+
+          <SubmitButton title="Save" />
         </AppForm>
       </View>
     </Screen>
@@ -126,10 +144,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   thumbnail: {
-    borderRadius: 10,
-    height: 120,
-    width: 300,
-    borderColor: colors.dark,
+    height: 200,
+    width: "80%",
   },
 });
 
