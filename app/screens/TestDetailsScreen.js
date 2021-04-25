@@ -1,17 +1,50 @@
 import React from "react";
-import { View, StyleSheet, Image } from "react-native";
+import { useState, useEffect } from "react";
+import { View, StyleSheet, Image, ActivityIndicator } from "react-native";
 
 import AppText from "../components/AppText";
 import colors from "../config/colors";
 import Screen from "../components/Screen";
+import { firebase } from "../../src/firebase/config";
+import Heading from "../components/Heading";
 
-function TestDetailsScreen(props) {
+function TestDetailsScreen({ navigation, route }) {
+  const [loading, setLoading] = useState(true);
+  let testID = route.params;
+  const [test, setTest] = useState([]);
+
+  useEffect(() => {
+    async function getTest() {
+      let doc = await firebase
+        .firestore()
+        .collection("tests")
+        .doc(testID.key)
+        .get();
+
+      if (!doc.exists) {
+        console.log("No test data with id: " + testID);
+      } else {
+        let dataObj = doc.data();
+        setTest(dataObj);
+        console.log("Test succesfully found");
+      }
+      return test;
+    }
+    getTest();
+    setLoading(false);
+  }, []);
+
+  if (loading) {
+    return <ActivityIndicator />;
+  }
+
   return (
     <Screen>
-      <Image source={require("../assets/background.png")} />
       <View style={styles.detailsContainer}>
-        <AppText style={styles.title}>Report</AppText>
-        <AppText style={styles.date}>7. april 2021</AppText>
+        <Heading>{test.comment}</Heading>
+        <Image source={{ uri: test.url }} />
+        <AppText style={styles.title}>{test.comment}</AppText>
+        <AppText style={styles.date}>{test.location}</AppText>
       </View>
     </Screen>
   );
@@ -27,8 +60,8 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   image: {
-    width: "100%",
-    height: 300,
+    width: 200,
+    height: 200,
   },
   title: {
     fontSize: 24,

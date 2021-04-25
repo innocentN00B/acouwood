@@ -1,20 +1,23 @@
 import React from "react";
-import { View, StyleSheet, Image, TouchableHighlight } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Image,
+  TouchableHighlight,
+  Text,
+} from "react-native";
 
 import colors from "../config/colors";
-import AppText from "./AppText";
-import ListItemSeperator from "./ListItemSeperator";
 
 function ListItem({ title, subtitle, image, onPress }) {
   return (
     <TouchableHighlight underlayColor={"transparent"} onPress={onPress}>
       <View style={styles.container}>
         <Image style={styles.image} source={image} />
-        <View style={styles.detailsContainer}>
-          <AppText style={styles.title}>{title}</AppText>
-          <AppText>{subtitle}</AppText>
+        <View style={styles.textContainer}>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.subtitle}>{subtitle}</Text>
         </View>
-        <ListItemSeperator />
       </View>
     </TouchableHighlight>
   );
@@ -22,22 +25,33 @@ function ListItem({ title, subtitle, image, onPress }) {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    paddingBottom: 20,
+    justifyContent: "center",
     backgroundColor: colors.primary,
-    marginBottom: 0,
-  },
-  detailsContainer: {
-    padding: 10,
+    marginHorizontal: 10,
+    borderRadius: 10,
   },
   image: {
-    width: 100,
-    height: 100,
-    borderRadius: 10,
-    borderColor: colors.accent,
-    borderWidth: 1,
+    width: 150,
+    height: 120,
+    borderTopRightRadius: 10,
+    borderTopLeftRadius: 10,
+  },
+  textContainer: {
+    paddingTop: 10,
+    alignItems: "flex-start",
   },
   title: {
-    marginBottom: 7,
+    color: colors.dark,
+    fontSize: 14,
+    fontFamily: "Montserrat_700Bold",
+    padding: 5,
+  },
+  subtitle: {
+    padding: 5,
+    color: colors.dark,
+    fontSize: 12,
+    fontFamily: "Montserrat_400Regular",
   },
 });
 

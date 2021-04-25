@@ -13,14 +13,11 @@ import { firebase } from "../../src/firebase/config";
 import Heading from "../components/Heading";
 import colors from "../config/colors";
 import NoTextLogoSvg from "../../svgs/NoTextLogoSvg";
-import RoundButton from "../components/RoundButton";
 import ScrollBottomSheet from "react-native-scroll-bottom-sheet";
 import ListItem from "../components/ListItem";
-import ListItemSeperator from "../components/ListItemSeperator";
 
 function HomeScreen({ navigation }) {
   const windowHeight = Dimensions.get("window").height;
-  const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(true);
   const [tests, setTests] = useState([]);
 
@@ -62,19 +59,23 @@ function HomeScreen({ navigation }) {
         <ScrollBottomSheet
           componentType="FlatList"
           snapPoints={[96, "45%", windowHeight - 264]}
-          initialSnapIndex={2}
+          initialSnapIndex={1}
           renderHandle={() => (
             <View style={styles.header}>
               <View style={styles.panelHandle} />
+              <Heading> Recent tests </Heading>
             </View>
           )}
           data={tests}
+          numColumns={2}
           renderItem={({ item }) => (
             <ListItem
               title={item.customer}
               subtitle={item.comment}
               image={{ uri: item.url }}
-              onPress={() => navigation.navigate("TestDetail")}
+              onPress={() =>
+                navigation.navigate("TestDetail", { key: item.key })
+              }
             />
           )}
           contentContainerStyle={styles.contentContainerStyle}
@@ -86,10 +87,9 @@ function HomeScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   buttonContainer: {
-    flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: "50%",
+    paddingTop: "40%",
   },
   startButton: {
     backgroundColor: colors.light,
@@ -111,7 +111,9 @@ const styles = StyleSheet.create({
   },
   contentContainerStyle: {
     backgroundColor: colors.light,
-    paddingVertical: 15,
+    padding: 16,
+    alignItems: "center",
+    justifyContent: "center",
   },
   header: {
     alignItems: "center",
@@ -122,16 +124,9 @@ const styles = StyleSheet.create({
   },
   panelHandle: {
     width: 40,
-    height: 2,
+    height: 4,
     backgroundColor: colors.accent,
-    borderRadius: 4,
-  },
-  item: {
-    padding: 20,
-    justifyContent: "center",
-    backgroundColor: colors.light,
-    alignItems: "center",
-    marginVertical: 10,
+    borderRadius: 10,
   },
 });
 

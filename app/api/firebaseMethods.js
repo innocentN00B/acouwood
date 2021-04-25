@@ -1,26 +1,6 @@
 import * as firebase from "firebase";
 import "firebase/firestore";
 
-export async function getUser() {
-  try {
-    const currentUser = firebase.auth().currentUser;
-    const db = firebase.firestore();
-    const user = db
-      .collection("users")
-      .doc(currentUser.uid)
-      .get()
-      .then((documentSnapshot) => {
-        console.log("User exists: ", documentSnapshot.exists);
-        if (documentSnapshot.exists) {
-          console.log("User data: ", documentSnapshot.data());
-        }
-      });
-    return user;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
 export async function registration(email, password, fullName) {
   try {
     await firebase.auth().createUserWithEmailAndPassword(email, password);
@@ -51,8 +31,6 @@ export async function loggingOut() {
     console.log(error);
   }
 }
-
-export async function getUserInfo() {}
 
 export async function newTest(comment, customer, image, location, testID) {
   try {
