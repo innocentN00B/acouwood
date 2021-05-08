@@ -53,7 +53,7 @@ export default function App() {
     });
   }, []);
 
-  if (!fontsLoaded) {
+  if (!fontsLoaded || loading) {
     return <AppLoading />;
   }
 

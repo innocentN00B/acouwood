@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 26,
     fontFamily: "Montserrat_700Bold",
-    paddingVertical: 20,
+    paddingVertical: 18,
     textAlign: "center",
     color: colors.dark,
   },

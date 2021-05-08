@@ -125,7 +125,7 @@ function ResultScreen({ navigation }) {
               onPress={takePicture}
               backgroundColor={colors.primary}
               borderColor={colors.secondary}
-              color={colors.accent}
+              color={colors.dark}
             />
           )}
           {imageUri && (

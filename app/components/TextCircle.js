@@ -6,7 +6,7 @@ import Heading from "./Heading";
 function TextCircle(props) {
   return (
     <View style={styles.circle}>
-      <Heading>OK</Heading>
+      <Heading>Detected moist</Heading>
     </View>
   );
 }
@@ -14,7 +14,7 @@ function TextCircle(props) {
 const styles = StyleSheet.create({
   circle: {
     borderRadius: 250 / 2,
-    backgroundColor: colors.normal,
+    backgroundColor: colors.accent,
     height: 250,
     width: 250,
     justifyContent: "center",

@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: colors.primary,
     marginHorizontal: 10,
+    marginVertical: 10,
     borderRadius: 10,
   },
   image: {

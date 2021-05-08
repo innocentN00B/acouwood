@@ -6,7 +6,7 @@ import AppText from "../components/AppText";
 function TextCircle(props) {
   return (
     <View style={styles.circle}>
-      <AppText>OK</AppText>
+      <AppText>MOIST DETECTED</AppText>
     </View>
   );
 }
@@ -14,7 +14,7 @@ function TextCircle(props) {
 const styles = StyleSheet.create({
   circle: {
     borderRadius: 20,
-    backgroundColor: colors.normal,
+    backgroundColor: colors.accent,
     height: "10%",
     width: "80%",
     justifyContent: "center",

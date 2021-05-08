@@ -10,7 +10,7 @@ function ErrorMessage({ error, visible }) {
 }
 const styles = StyleSheet.create({
   error: {
-    color: defaultStyles.colors.accent,
+    color: defaultStyles.colors.dark,
     fontSize: 12,
     fontFamily: "Montserrat_400Regular",
   },

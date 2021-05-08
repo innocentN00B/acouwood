@@ -6,11 +6,13 @@ import {
   View,
   ActivityIndicator,
   Dimensions,
+  Animated,
 } from "react-native";
 
 import Screen from "../components/Screen";
 import { firebase } from "../../src/firebase/config";
 import Heading from "../components/Heading";
+import AppText from "../components/AppText";
 import colors from "../config/colors";
 import NoTextLogoSvg from "../../svgs/NoTextLogoSvg";
 import ScrollBottomSheet from "react-native-scroll-bottom-sheet";
@@ -58,12 +60,13 @@ function HomeScreen({ navigation }) {
         </TouchableOpacity>
         <ScrollBottomSheet
           componentType="FlatList"
-          snapPoints={[96, "45%", windowHeight - 264]}
+          snapPoints={[128, "75%", windowHeight - 130]}
           initialSnapIndex={1}
+          enableOverScroll={false}
           renderHandle={() => (
             <View style={styles.header}>
               <View style={styles.panelHandle} />
-              <Heading> Recent tests </Heading>
+              <AppText> Swipe up to see your tests </AppText>
             </View>
           )}
           data={tests}
@@ -89,7 +92,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: "40%",
+    flex: 1,
   },
   startButton: {
     backgroundColor: colors.light,
@@ -104,29 +107,30 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-
     elevation: 5,
     justifyContent: "center",
     alignItems: "center",
   },
   contentContainerStyle: {
     backgroundColor: colors.light,
-    padding: 16,
+    padding: 20,
     alignItems: "center",
     justifyContent: "center",
   },
   header: {
     alignItems: "center",
     backgroundColor: colors.light,
-    paddingVertical: 30,
+    paddingTop: 30,
+    paddingBottom: 10,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
   },
   panelHandle: {
     width: 40,
     height: 4,
-    backgroundColor: colors.accent,
+    backgroundColor: colors.dark,
     borderRadius: 10,
+    marginBottom: 20,
   },
 });
 

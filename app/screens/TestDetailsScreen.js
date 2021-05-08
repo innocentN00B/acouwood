@@ -52,7 +52,7 @@ function TestDetailsScreen({ navigation, route }) {
 
 const styles = StyleSheet.create({
   date: {
-    color: colors.accent,
+    color: colors.dark,
     fontSize: 20,
     marginVertical: 10,
   },
