@@ -1,21 +1,14 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import {
-  TouchableOpacity,
-  StyleSheet,
-  View,
-  ActivityIndicator,
-  Dimensions,
-  Animated,
-} from "react-native";
+import { StyleSheet, View, ActivityIndicator, Dimensions } from "react-native";
 
 import Screen from "../components/Screen";
 import { firebase } from "../../src/firebase/config";
 import Heading from "../components/Heading";
 import AppText from "../components/AppText";
 import colors from "../config/colors";
-import NoTextLogoSvg from "../../svgs/NoTextLogoSvg";
 import ScrollBottomSheet from "react-native-scroll-bottom-sheet";
+import StartButton from "../components/StartButton";
 import ListItem from "../components/ListItem";
 
 function HomeScreen({ navigation }) {
@@ -52,12 +45,7 @@ function HomeScreen({ navigation }) {
     <Screen>
       <View style={styles.buttonContainer}>
         <Heading>Tap to start test</Heading>
-        <TouchableOpacity
-          style={styles.startButton}
-          onPress={() => navigation.navigate("Category")}
-        >
-          <NoTextLogoSvg />
-        </TouchableOpacity>
+        <StartButton onPress={() => navigation.navigate("Category")} />
         <ScrollBottomSheet
           componentType="FlatList"
           snapPoints={[128, "75%", windowHeight - 130]}
@@ -93,23 +81,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flex: 1,
-  },
-  startButton: {
-    backgroundColor: colors.light,
-    borderRadius: 100,
-    width: 200,
-    height: 200,
-    marginVertical: 10,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-    justifyContent: "center",
-    alignItems: "center",
   },
   contentContainerStyle: {
     backgroundColor: colors.light,
