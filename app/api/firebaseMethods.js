@@ -27,6 +27,7 @@ export async function signIn(email, password) {
 export async function loggingOut() {
   try {
     await firebase.auth().signOut();
+    console.log("User signed out.");
   } catch (error) {
     console.log(error);
   }

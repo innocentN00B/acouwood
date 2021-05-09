@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: 280,
     height: 60,
-    marginVertical: 20,
+    marginVertical: 15,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,

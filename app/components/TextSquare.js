@@ -3,34 +3,35 @@ import { StyleSheet, TouchableHighlight, View } from "react-native";
 import colors from "../config/colors";
 import AppText from "../components/AppText";
 
-function TextCircle(props) {
+function TextSquare({ title }) {
   return (
-    <View style={styles.circle}>
-      <AppText>MOIST DETECTED</AppText>
+    <View style={styles.outerSquare}>
+      <View style={styles.square}>
+        <AppText color={colors.primary}>{title}</AppText>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  circle: {
-    borderRadius: 20,
+  square: {
     backgroundColor: colors.accent,
-    height: "10%",
+    height: 80,
+    width: "92%",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+  },
+  outerSquare: {
+    backgroundColor: colors.primary,
+    borderColor: colors.accent,
+    borderWidth: 2,
+    height: 100,
     width: "80%",
     justifyContent: "center",
     alignItems: "center",
-    alignSelf: "center",
-    margin: 10,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-
-    elevation: 5,
+    borderRadius: 10,
   },
 });
 
-export default TextCircle;
+export default TextSquare;

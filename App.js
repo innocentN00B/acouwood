@@ -10,7 +10,6 @@ import { firebase } from "./src/firebase/config";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
 
-//Local imports
 import LoginScreen from "./app/screens/LoginScreen";
 import HomeScreen from "./app/screens/HomeScreen";
 import CategoryScreen from "./app/screens/CategoryScreen";

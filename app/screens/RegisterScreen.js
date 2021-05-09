@@ -4,7 +4,6 @@ import * as Yup from "yup";
 
 import { AppForm, AppFormField, SubmitButton } from "../components/forms";
 import colors from "../config/colors";
-import { firebase } from "../../src/firebase/config";
 import Heading from "../components/Heading";
 import Screen from "../components/Screen";
 import { registration } from "../api/firebaseMethods";

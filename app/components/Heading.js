@@ -2,8 +2,8 @@ import React from "react";
 import { Text, StyleSheet } from "react-native";
 import colors from "../config/colors";
 
-function Heading({ children }) {
-  return <Text style={styles.text}> {children}</Text>;
+function Heading({ children, color }) {
+  return <Text style={[styles.text, color && { color }]}> {children}</Text>;
 }
 
 const styles = StyleSheet.create({

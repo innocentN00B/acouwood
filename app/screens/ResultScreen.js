@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View, Image, Keyboard } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import * as Yup from "yup";
 import { v4 as uuidv4 } from "uuid";
 import "react-native-get-random-values";
@@ -12,22 +11,24 @@ import RoundButton from "../components/RoundButton";
 import Heading from "../components/Heading";
 import Screen from "../components/Screen";
 import colors from "../config/colors";
-import useLocation from "../hooks/useLocation";
-import { newTest, getUserInfo } from "../api/firebaseMethods";
+import { newTest } from "../api/firebaseMethods";
 import * as firebase from "firebase";
 import "firebase/firestore";
+import useLocation from "../hooks/useLocation";
 
 const validationSchema = Yup.object().shape({
-  location: Yup.string().label("Location"),
-  name: Yup.string().label("Name"),
-  customer: Yup.string().label("Customer"),
-  comment: Yup.string().label("Comment"),
+  location: Yup.string().label("Location").required("Required field"),
+  name: Yup.string().label("Name").required("Required field"),
+  customer: Yup.string().label("Customer").required("Required field"),
+  comment: Yup.string().label("Comment").required("Required field"),
 });
 
 function ResultScreen({ navigation }) {
-  const [imageUri, setImageUri] = useState();
   let currentUserUID = firebase.auth().currentUser.uid;
+  const [imageUri, setImageUri] = useState();
+  const [modalVisible, setModalVisible] = useState(false);
   const [fullName, setName] = useState("");
+  const location = useLocation([]);
 
   useEffect(() => {
     async function getUserInfo() {
@@ -76,7 +77,7 @@ function ResultScreen({ navigation }) {
     <Screen>
       <View style={styles.container}>
         <Heading>Result</Heading>
-        <TextSquare />
+        <TextSquare title="Moist detected" />
         <AppForm
           initialValues={{
             comment: "",
@@ -85,14 +86,14 @@ function ResultScreen({ navigation }) {
             name: "",
             location: "",
           }}
-          onSubmit={handleSubmit}
+          onSubmit={() => (handleSubmit, console.log("Test submitted"))}
           validationSchema={validationSchema}
         >
           <AppFormField
             autoCorrect={true}
             icon="pin"
             name="location"
-            placeholder={"Stavnsbjerg Alle 44"}
+            placeholder={"Address"}
             textContentType="location"
           />
           <AppFormField
@@ -100,7 +101,7 @@ function ResultScreen({ navigation }) {
             autoCorrect={true}
             icon="account-cowboy-hat"
             name="name"
-            placeholder={fullName}
+            placeholder={"Name"}
             textContentType="name"
           />
           <AppFormField
@@ -121,7 +122,7 @@ function ResultScreen({ navigation }) {
           />
           {!imageUri && (
             <RoundButton
-              title="Upload billede"
+              title="Upload picture"
               onPress={takePicture}
               backgroundColor={colors.primary}
               borderColor={colors.secondary}
@@ -132,7 +133,7 @@ function ResultScreen({ navigation }) {
             <Image source={{ uri: imageUri }} style={styles.thumbnail} />
           )}
 
-          <SubmitButton title="Save" />
+          <SubmitButton title="Save test" />
         </AppForm>
       </View>
     </Screen>
@@ -146,6 +147,13 @@ const styles = StyleSheet.create({
   thumbnail: {
     height: 200,
     width: "80%",
+  },
+  modalContainer: {
+    height: "20%",
+    width: "80%",
+    backgroundColor: colors.primary,
+    borderColor: colors.secondary,
+    borderWidth: 2,
   },
 });
 

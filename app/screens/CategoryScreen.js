@@ -8,18 +8,20 @@ import Screen from "../components/Screen";
 function CategoryScreen({ navigation }) {
   return (
     <Screen>
-      <View style={styles.container}>
-        <Heading>Hvilket type træ skal du måle på?</Heading>
+      <View style={styles.header}>
+        <Heading>What type of wood are you testing?</Heading>
+      </View>
+      <View style={styles.buttonsContainer}>
         <CategoryButton
-          title="Almindeligt træ"
+          title="Normal wood"
           onPress={() => navigation.navigate("Test")}
         ></CategoryButton>
         <CategoryButton
-          title="CLT træ"
+          title="CLT"
           onPress={() => navigation.navigate("Test")}
         ></CategoryButton>
         <CategoryButton
-          title="Lamineret træ"
+          title="Glulam"
           onPress={() => navigation.navigate("Test")}
         ></CategoryButton>
       </View>
@@ -28,9 +30,15 @@ function CategoryScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  header: {
     alignItems: "center",
-    paddingTop: 100,
+    justifyContent: "center",
+    paddingTop: 150,
+    paddingHorizontal: 40,
+  },
+  buttonsContainer: {
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

@@ -12,6 +12,8 @@ function TestDetailsScreen({ navigation, route }) {
   const [loading, setLoading] = useState(true);
   let testID = route.params;
   const [test, setTest] = useState([]);
+  const [testImageUri, setTestImageUri] = useState("");
+  const [testDate, setTestDate] = useState("");
 
   useEffect(() => {
     async function getTest() {
@@ -27,6 +29,10 @@ function TestDetailsScreen({ navigation, route }) {
         let dataObj = doc.data();
         setTest(dataObj);
         console.log("Test succesfully found");
+        setTestImageUri(test.url);
+        const dateObject = await test.createdAt.toDate();
+        setTestDate(dateObject);
+        console.log(testDate);
       }
       return test;
     }
@@ -41,10 +47,10 @@ function TestDetailsScreen({ navigation, route }) {
   return (
     <Screen>
       <View style={styles.detailsContainer}>
-        <Heading>{test.comment}</Heading>
-        <Image source={{ uri: test.url }} />
+        <Heading>{test.testerID}</Heading>
+        <Image style={styles.image} source={{ uri: testImageUri }} />
         <AppText style={styles.title}>{test.comment}</AppText>
-        <AppText style={styles.date}>{test.location}</AppText>
+        <AppText style={styles.date}>{test.comment}</AppText>
       </View>
     </Screen>
   );
@@ -58,10 +64,13 @@ const styles = StyleSheet.create({
   },
   detailsContainer: {
     padding: 20,
+    alignItems: "center",
   },
   image: {
-    width: 200,
-    height: 200,
+    width: "80%",
+    height: 300,
+    borderColor: colors.secondary,
+    borderWidth: 2,
   },
   title: {
     fontSize: 24,
