@@ -15,38 +15,18 @@ import { newTest } from "../api/firebaseMethods";
 import * as firebase from "firebase";
 import "firebase/firestore";
 import useLocation from "../hooks/useLocation";
+import { FlatList } from "react-native-gesture-handler";
 
 const validationSchema = Yup.object().shape({
+  woodId: Yup.string().label("WoodID").required("Required field"),
   location: Yup.string().label("Location").required("Required field"),
-  name: Yup.string().label("Name").required("Required field"),
-  customer: Yup.string().label("Customer").required("Required field"),
   comment: Yup.string().label("Comment").required("Required field"),
 });
 
 function ResultScreen({ navigation }) {
   let currentUserUID = firebase.auth().currentUser.uid;
   const [imageUri, setImageUri] = useState();
-  const [modalVisible, setModalVisible] = useState(false);
-  const [fullName, setName] = useState("");
-  const location = useLocation([]);
-
-  useEffect(() => {
-    async function getUserInfo() {
-      let doc = await firebase
-        .firestore()
-        .collection("users")
-        .doc(currentUserUID)
-        .get();
-
-      if (!doc.exists) {
-        Alert.alert("No user data found!");
-      } else {
-        let dataObj = doc.data();
-        setName(dataObj.fullName);
-      }
-    }
-    getUserInfo();
-  });
+  const [moistDetected, setMoistDetected] = useState(false);
 
   //Getting users permission to the camera and photo library
   const requestCameraPermission = async () => {
@@ -69,8 +49,23 @@ function ResultScreen({ navigation }) {
 
   const handleSubmit = async (values) => {
     const testID = uuidv4();
-    newTest(values.comment, values.customer, imageUri, values.location, testID);
+    generateResult();
+    newTest(
+      values.comment,
+      values.woodId,
+      imageUri,
+      values.location,
+      testID,
+      moistDetected,
+      currentUserUID
+    );
     navigation.navigate("Home");
+  };
+
+  const generateResult = () => {
+    const randomBoolean = Boolean(Math.round(Math.random() < 0.5));
+    setMoistDetected(randomBoolean);
+    console.log(moistDetected);
   };
 
   return (
@@ -86,34 +81,25 @@ function ResultScreen({ navigation }) {
             name: "",
             location: "",
           }}
-          onSubmit={() => (handleSubmit, console.log("Test submitted"))}
+          onSubmit={handleSubmit}
           validationSchema={validationSchema}
         >
+          <AppFormField
+            autoCapitalize="none"
+            autoCorrect={false}
+            icon="shield-key-outline"
+            name="woodId"
+            placeholder={"Wood Sample ID"}
+            textContentType="oneTimeCode"
+          />
           <AppFormField
             autoCorrect={true}
             icon="pin"
             name="location"
-            placeholder={"Address"}
+            placeholder={"Location"}
             textContentType="location"
           />
           <AppFormField
-            autoCapitalize="none"
-            autoCorrect={true}
-            icon="account-cowboy-hat"
-            name="name"
-            placeholder={"Name"}
-            textContentType="name"
-          />
-          <AppFormField
-            autoCapitalize="none"
-            autoCorrect={true}
-            icon="briefcase"
-            name="customer"
-            placeholder="Customer"
-            textContentType="organizationName"
-          />
-          <AppFormField
-            autoCapitalize="none"
             autoCorrect={true}
             icon="comment"
             name="comment"

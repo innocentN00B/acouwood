@@ -30,9 +30,10 @@ function LoginScreen({ navigation }) {
         >
           <AppFormField
             icon="email"
+            autoCorrect={false}
             keyboardType="email-address"
             name="email"
-            placeholder="kenneth@jjensengenbyg.dk"
+            placeholder="Email"
             textContentType="emailAddress"
           ></AppFormField>
           <AppFormField
@@ -49,6 +50,8 @@ function LoginScreen({ navigation }) {
         <RoundButton
           title="Register"
           onPress={() => navigation.navigate("Register")}
+          borderColor="#E3A541"
+          backgroundColor="#EBDDC2"
         />
       </View>
     </Screen>

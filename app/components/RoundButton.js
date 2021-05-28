@@ -20,7 +20,7 @@ function RoundButton({ title, onPress, backgroundColor, borderColor, color }) {
 const styles = StyleSheet.create({
   button: {
     backgroundColor: colors.secondary,
-    borderRadius: 15,
+    borderRadius: 20,
     borderColor: colors.primary,
     borderWidth: 4,
     justifyContent: "center",

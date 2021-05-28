@@ -28,7 +28,7 @@ function RegisterScreen({ navigation, route }) {
   return (
     <Screen>
       <View style={styles.container}>
-        <Heading>Opret bruger</Heading>
+        <Heading>Create a user</Heading>
         <AppForm
           initialValues={{
             fullName: "",
@@ -42,18 +42,18 @@ function RegisterScreen({ navigation, route }) {
           validationSchema={validationSchema}
         >
           <AppFormField
-            autoCorrect={true}
+            autoCorrect={false}
             icon="human-greeting"
             keyboardType="default"
             name="fullName"
-            placeholder="Kenneth Jensen"
+            placeholder="Name"
             textContentType="name"
           />
           <AppFormField
             icon="email"
             keyboardType="email-address"
             name="email"
-            placeholder="kenneth@jjensengenbyg.dk"
+            placeholder="Email"
             textContentType="emailAddress"
           />
           <AppFormField
@@ -74,7 +74,7 @@ function RegisterScreen({ navigation, route }) {
             secureTextEntry
             textContentType="password"
           />
-          <SubmitButton title="Opret bruger" />
+          <SubmitButton title="Login" />
         </AppForm>
       </View>
     </Screen>

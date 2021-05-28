@@ -1,3 +1,4 @@
+import { NavigationContainer } from "@react-navigation/native";
 import * as firebase from "firebase";
 import "firebase/firestore";
 
@@ -33,7 +34,15 @@ export async function loggingOut() {
   }
 }
 
-export async function newTest(comment, customer, image, location, testID) {
+export async function newTest(
+  comment,
+  woodId,
+  image,
+  location,
+  testID,
+  moistDetected,
+  userID
+) {
   try {
     const db = firebase.firestore();
     const currentUser = firebase.auth().currentUser;
@@ -41,15 +50,16 @@ export async function newTest(comment, customer, image, location, testID) {
     const res = await db.collection("tests").add({
       comment: comment,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-      customer: customer,
+      woodId: woodId,
       image: image,
       location: location,
-      testerID: currentUser.uid,
+      testerID: userID,
       testID: testID,
+      moistDetected: moistDetected,
     });
     await uploadImage(image, testID);
     await downloadImage(testID, res.id);
-    console.log("New test generated");
+    console.log("New test succesfully generated");
   } catch (error) {
     console.log(error);
   }

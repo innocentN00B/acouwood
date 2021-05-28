@@ -13,7 +13,7 @@ function TestScreen({ navigation }) {
   return (
     <Screen>
       <View style={styles.container}>
-        <AppText>Test was succesfully made...</AppText>
+        <AppText>Test succesfully made</AppText>
         <View style={styles.resultContainer}>
           <TextCircle title="Detected moist" color={colors.primary} />
         </View>

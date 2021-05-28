@@ -23,7 +23,6 @@ function HomeScreen({ navigation }) {
       .onSnapshot((querySnapshot) => {
         const tests = [];
         querySnapshot.forEach((documentSnapshot) => {
-          //Lav et loop der formaterer timestamp til et date objekt
           tests.push({
             ...documentSnapshot.data(),
             key: documentSnapshot.id,
@@ -31,6 +30,7 @@ function HomeScreen({ navigation }) {
         });
         setTests(tests);
         setLoading(false);
+        console.log(tests);
       });
 
     // Unsubscribe from events when no longer in use
@@ -61,7 +61,7 @@ function HomeScreen({ navigation }) {
           numColumns={2}
           renderItem={({ item }) => (
             <ListItem
-              title={item.customer}
+              title={item.result}
               subtitle={item.comment}
               image={{ uri: item.url }}
               onPress={() =>
@@ -86,7 +86,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.light,
     padding: 20,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
+    flex: 1,
   },
   header: {
     alignItems: "center",
