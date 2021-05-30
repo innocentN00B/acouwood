@@ -1,13 +1,8 @@
 # Acouwood Mobile App
 
-**Built in [React Native](https://reactnative.dev) using [Expo](https://expo.io)**
+Built in [React Native](https://reactnative.dev) using [Expo](https://expo.io) by **Matilde Gerholt** and **Julie Astrid Schelhart Madsen**,
 
-## Contributers
-**Matilde Gerholt** 
-[matg@itu.dk](mailto:matg@itu.dk)
-
-**Julie Astrid Schelhart Madsen**,
-[juam@itu.dk](mailto:juam@itu.dk)
+**Demo:** The demo is located in the root of the project, called "demo.mp4"
 
 ## How To Run
 
